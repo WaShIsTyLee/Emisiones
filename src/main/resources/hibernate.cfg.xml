@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url"/>
+    <property name="connection.driver_class"/>
+    <!-- Configuración de conexión a la base de datos -->
+    <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/carbono?useSSL=false&amp;serverTimezone=UTC</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password"></property>
+    <!-- Dialecto de Hibernate para MySQL -->
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+    <!-- Configuración de Hibernate -->
+    <property name="hibernate.show_sql">true</property> <!-- Muestra las consultas SQL en la consola -->
+    <property name="hibernate.format_sql">true</property> <!-- Formatea las consultas SQL -->
+    <property name="hibernate.hbm2ddl.auto">update</property> <!-- Crea o actualiza tablas automáticamente -->
+    <mapping class="org.example.Entities.Actividad"/>
+    <mapping class="org.example.Entities.Categoria"/>
+    <mapping class="org.example.Entities.Habito"/>
+    <mapping class="org.example.Entities.HabitoId"/>
+    <mapping class="org.example.Entities.Huella"/>
+    <mapping class="org.example.Entities.Recomendacion"/>
+    <mapping class="org.example.Entities.Usuario"/>
+
+  </session-factory>
+</hibernate-configuration>
