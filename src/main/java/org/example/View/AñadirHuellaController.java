@@ -5,10 +5,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.example.App;
 import org.example.DAO.ActividadDAO;
+import org.example.DAO.HuellaDAO;
 import org.example.Entities.Actividad;
 import org.example.Entities.Huella;
 import org.example.Services.ActividadService;
+import org.example.Services.HuellaServices;
 import org.example.Session.Session;
 
 import javax.swing.*;
@@ -31,6 +34,7 @@ public class AñadirHuellaController extends Controller implements Initializable
     TextField unidadTextField;
 
     ActividadService actividadService = new ActividadService();
+    HuellaServices huellaServices = new HuellaServices();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,23 +86,54 @@ public class AñadirHuellaController extends Controller implements Initializable
         stage.close();
     }
 
+    public void changescenetoPantallaPrincipal() throws IOException {
+        App.currentController.changeScene(Scenes.PANTALLAPRINCIPAL, null);
+    }
+
     public Huella recogerDatos() {
         Huella huella = new Huella();
         huella.setUnidad(unidadTextField.getText());
-        huella.setValor(new BigDecimal(valor.getText()));
-        huella.setIdActividad(actividadService.getActividadByName(comboBoxActividades.getSelectionModel().getSelectedItem()));
+        try {
+            if (valor.getText() != null && !valor.getText().isEmpty()) {
+                huella.setValor(new BigDecimal(valor.getText()));
+            } else {
+                huella.setValor(null);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al procesar el valor: " + e.getMessage());
+            huella.setValor(null);
+        }
+        if (comboBoxActividades.getSelectionModel().getSelectedItem() == null) {
+            System.out.println("Error: No se ha seleccionado ninguna actividad.");
+            huella.setIdActividad(null);
+        } else {
+            huella.setIdActividad(
+                    actividadService.getActividadByName(comboBoxActividades.getSelectionModel().getSelectedItem())
+            );
+        }
         huella.setFecha(LocalDate.now());
         huella.setIdUsuario(Session.getInstancia().getUsuarioIniciado());
+
         return huella;
     }
+
+
+
 
     //FALTA MOVERLO ESTO VA EN SERVICES
     public void insertarHuella() throws IOException {
         Huella huella = recogerDatos();
-        ActividadDAO actividadDAO = new ActividadDAO();
-        actividadDAO.insertaHuella(huella);
-        closeModalAñadirHuella();
+        boolean resultado = huellaServices.añadirHuella(huella);
+        if (resultado) {
+            System.out.println("Huella insertada correctamente.");
+            changescenetoPantallaPrincipal();
+            closeModalAñadirHuella();
+        } else {
+            System.out.println("Error al insertar la huella. Verifique los datos.");
+        }
     }
 
-
 }
+
+
+

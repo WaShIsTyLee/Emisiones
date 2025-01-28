@@ -35,7 +35,7 @@ public class UserDAO {
         Connection connection = Connection.getInstance();
         Session session = connection.getSession();
         session.beginTransaction();
-        session.remove(user);
+        session.de(user);
         session.getTransaction().commit();
         session.close();
         return user;

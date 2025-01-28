@@ -4,6 +4,7 @@ public enum Scenes {
     ROOT("/org/example/View/layout.fxml"),
     LOGIN("/org/example/View/login.fxml"),
     HUELLA("/org/example/View/añadirhuella.fxml"),
+    HABITO("/org/example/View/añadirhabito.fxml"),
 
     REGISTER("/org/example/View/register.fxml"),
     PANTALLAPRINCIPAL("/org/example/View/pantallaprincipal.fxml"),

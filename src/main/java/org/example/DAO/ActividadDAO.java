@@ -5,7 +5,7 @@ import org.example.Entities.Actividad;
 import org.example.Entities.Huella;
 import org.example.Session.Connection;
 import org.hibernate.Session;
-import org.example.Session.Connection;
+
 import java.util.List;
 
 public class ActividadDAO {
@@ -13,14 +13,18 @@ public class ActividadDAO {
     private final static String findall = "FROM Actividad";
     private final static String findActividadByName = "FROM Actividad WHERE nombre = :name";
     private final static String findUnidadByActividad = "SELECT c.unidad FROM Categoria c JOIN Actividad a ON a.idCategoria = c WHERE a.idCategoria.id = :idCategoria";
+    private final static String findByID = "FROM Actividad WHERE id = :id";
 
-
-    public void insertaHuella(Huella huella) {
+    public Actividad findByID(Huella huella) {
         Connection connection = Connection.getInstance();
         Session session = connection.getSession();
-        session.save(huella);
+        Query query = session.createQuery(findByID);
+        query.setParameter("id", huella.getIdActividad().getId());
+        Actividad actividad = (Actividad) query.getSingleResult();
         session.close();
+        return actividad;
     }
+
     public List<Actividad> findAll() {
         Connection connection = Connection.getInstance();
         Session session = connection.getSession();

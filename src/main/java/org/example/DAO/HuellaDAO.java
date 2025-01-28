@@ -1,0 +1,62 @@
+package org.example.DAO;
+
+import org.example.Entities.Huella;
+import org.example.Entities.Usuario;
+import org.example.Session.Connection;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import java.util.List;
+
+public class HuellaDAO {
+
+    private static final String findall = "FROM Huella";
+    private static final String findByUserID = "FROM Huella WHERE idUsuario.id = :id";
+
+    public void delete(Huella huella) {
+        Connection connection = Connection.getInstance();
+        Session session = connection.getSession();
+        session.beginTransaction();
+        session.delete(huella);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void updateHuella(Huella huella) {
+        Connection connection = Connection.getInstance();
+        Session session = connection.getSession();
+        session.beginTransaction();
+        session.merge(huella);
+        System.out.println(huella.toString());
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void insertaHuella(Huella huella) {
+        Connection connection = Connection.getInstance();
+        Session session = connection.getSession();
+        session.beginTransaction();
+        session.persist(huella);
+        session.getTransaction().commit();
+        session.close();
+    }
+    public List<Huella> findByUserID(Usuario usuario) {
+        Connection connection = Connection.getInstance();
+        Session session = connection.getSession();
+        Query query = session.createQuery(findByUserID);
+        query.setParameter("id", usuario.getId());
+        List<Huella> huellas = query.getResultList();
+        session.close();
+        return huellas;
+    }
+
+    public List<Huella> findall() {
+        Connection connection = Connection.getInstance();
+        Session session = connection.getSession();
+        Query query = session.createQuery(findall);
+        List<Huella> huellas = query.getResultList();
+        session.close();
+        return huellas;
+
+    }
+}
