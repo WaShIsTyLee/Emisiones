@@ -16,6 +16,7 @@ public class HabitoService {
     }
 
     public List<Habito> findByUser(Usuario user) {
+
         List<Habito> habitos = new ArrayList<>();
         if (user != null) {
             habitos = habitoDAO.findByUser(user);

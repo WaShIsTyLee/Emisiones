@@ -2,11 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.View.AñadirHuellaController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.View.AñadirHuellaController">
    <children>
       <Label layoutX="235.0" layoutY="173.0" text="Unidad" />
       <Label layoutX="447.0" layoutY="182.0" text="Valor" />
@@ -15,5 +16,6 @@
       <ComboBox fx:id="comboBoxActividades" layoutX="277.0" layoutY="305.0" prefWidth="150.0" />
       <Label layoutX="327.0" layoutY="281.0" text="Actividad" />
       <Button fx:id="buttonAñadirHuella" layoutX="361.0" layoutY="51.0" mnemonicParsing="false" onAction="#insertarHuella" text="Añadirt Huella" />
+      <DatePicker fx:id="datePicker" layoutX="360.0" layoutY="122.0" />
    </children>
 </AnchorPane>

@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class AñadirHabitoController extends Controller implements Initializable {
     @FXML
-    ComboBox <Actividad> comboBoxActividades;
+    ComboBox<Actividad> comboBoxActividades;
     @FXML
     TextField frecuencia;
     @FXML
@@ -68,23 +68,23 @@ public class AñadirHabitoController extends Controller implements Initializable
     public void onOpen(Object input) throws IOException {
     }
 
-        public Habito recogerDatosHabito() {
-            String tipo = (String) comboBoxTipo.getValue();
-            int frecuencia = Integer.parseInt(this.frecuencia.getText());
-            Habito habito = new Habito();
-            Actividad actividad = new Actividad();
-            actividad = actividadService.getActividadByName(comboBoxActividades.getSelectionModel().getSelectedItem());
-            habito.setIdActividad(actividad);
-            habito.setFrecuencia(frecuencia);
-            habito.setTipo(tipo);
-            habito.setIdUsuario(Session.getInstancia().getUsuarioIniciado());
-            habito.setUltimaFecha(LocalDate.now());
-            HabitoId id = new HabitoId();
-            id.setIdActividad(actividad.getId());
-            id.setIdUsuario(Session.getInstancia().getUsuarioIniciado().getId());
-            habito.setId(id);
-            return habito;
-        }
+    public Habito recogerDatosHabito() {
+        String tipo = (String) comboBoxTipo.getValue();
+        int frecuencia = Integer.parseInt(this.frecuencia.getText());
+        Habito habito = new Habito();
+        Actividad actividad = new Actividad();
+        actividad = actividadService.getActividadByName(comboBoxActividades.getSelectionModel().getSelectedItem());
+        habito.setIdActividad(actividad);
+        habito.setFrecuencia(frecuencia);
+        habito.setTipo(tipo);
+        habito.setIdUsuario(Session.getInstancia().getUsuarioIniciado());
+        habito.setUltimaFecha(LocalDate.now());
+        HabitoId id = new HabitoId();
+        id.setIdActividad(actividad.getId());
+        id.setIdUsuario(Session.getInstancia().getUsuarioIniciado().getId());
+        habito.setId(id);
+        return habito;
+    }
 
     public void insertarHabito() throws IOException {
         Habito habito = recogerDatosHabito();

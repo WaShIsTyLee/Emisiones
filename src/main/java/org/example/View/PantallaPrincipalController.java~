@@ -138,7 +138,8 @@ public class PantallaPrincipalController extends Controller implements Initializ
         App.currentController.openModal(Scenes.HUELLA, "Añadir Huella", this, null);
     }
     public void openModalRecomendaciones() throws Exception {
-        App.currentController.openModal(Scenes.RECOMENDACION, "Recomendaciones", this, null);
+        List <Habito> habitos = habitoDAO.findByUser(Session.getInstancia().getUsuarioIniciado());
+        App.currentController.openModal(Scenes.RECOMENDACION, "Recomendaciones", this, habitos);
     }
 
     public void openModalAñadirHabito() throws Exception {

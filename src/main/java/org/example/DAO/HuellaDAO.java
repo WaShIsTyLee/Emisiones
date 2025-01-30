@@ -32,6 +32,7 @@ public class HuellaDAO {
         session.close();
     }
 
+
     public void insertaHuella(Huella huella) {
         Connection connection = Connection.getInstance();
         Session session = connection.getSession();
