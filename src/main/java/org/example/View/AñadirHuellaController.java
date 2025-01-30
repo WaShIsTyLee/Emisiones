@@ -6,15 +6,11 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.App;
-import org.example.DAO.ActividadDAO;
-import org.example.DAO.HuellaDAO;
 import org.example.Entities.Actividad;
 import org.example.Entities.Huella;
 import org.example.Services.ActividadService;
 import org.example.Services.HuellaServices;
 import org.example.Session.Session;
-
-import javax.swing.*;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -37,6 +33,8 @@ public class AñadirHuellaController extends Controller implements Initializable
 
     ActividadService actividadService = new ActividadService();
     HuellaServices huellaServices = new HuellaServices();
+
+    //todo ESTE CONTROLLADOR TMBIEN TIENE LOS SERVICES APLICADOS COMPROBAR ERRORES
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -119,6 +117,7 @@ public class AñadirHuellaController extends Controller implements Initializable
             huella.setFecha(datePicker.getValue());
             huella.setIdUsuario(Session.getInstancia().getUsuarioIniciado());
         }
+
 
 
         return huella;

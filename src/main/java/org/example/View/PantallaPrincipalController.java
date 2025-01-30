@@ -1,6 +1,4 @@
 package org.example.View;
-
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,12 +9,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.BigDecimalStringConverter;
 import org.example.App;
-import org.example.DAO.ActividadDAO;
-import org.example.DAO.HabitoDAO;
-import org.example.DAO.HuellaDAO;
 import org.example.Entities.Actividad;
 import org.example.Entities.Habito;
 import org.example.Entities.Huella;
+import org.example.Services.ActividadService;
+import org.example.Services.HabitoService;
+import org.example.Services.HuellaServices;
 import org.example.Session.Session;
 
 import java.io.IOException;
@@ -33,6 +31,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
     Button btnAnadirHabito;
     @FXML
     Button btnRecomendaciones;
+
     //TABLEVIEW DE HABITOS
     @FXML
     TableView<Habito> habitoTableView;
@@ -44,7 +43,6 @@ public class PantallaPrincipalController extends Controller implements Initializ
     TableColumn<Habito, String> ActividadHabito;
     @FXML
     TableColumn<Habito, Void> EliminarHabito;
-
 
     //TABLEVIEW DE HUELLAS
     @FXML
@@ -60,35 +58,43 @@ public class PantallaPrincipalController extends Controller implements Initializ
     @FXML
     TableColumn<Huella, Void> Eliminar;
 
-    HuellaDAO huellaDAO = new HuellaDAO();
-    ActividadDAO actividadDAO = new ActividadDAO();
-    HabitoDAO habitoDAO = new HabitoDAO();
+
+
+    HuellaServices huellaServices = new HuellaServices();
+    HabitoService habitoService = new HabitoService();
+    ActividadService actividadService = new ActividadService();
+
+    //todo ESTE CONTROLLADOR TMBIEN TIENE LOS SERVICES APLICADOS COMPROBAR ERRORES
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //A PARTIR DE AQUI ES PARA PERSONALIZAR EL TABLEVIEW DE HUELLAS
+
         Valor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         Unidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
         Fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         Actividad.setCellValueFactory(cellData -> {
             Huella huella = cellData.getValue();
-            Actividad actividad = actividadDAO.findByID(huella);
+            Actividad actividad = actividadService.getActividadById(huella);
             return new SimpleStringProperty(actividad != null ? actividad.getNombre() : "Actividad no disponible");
         });
-        List<Huella> huellas = huellaDAO.findByUserID(Session.getInstancia().getUsuarioIniciado());
+        List<Huella> huellas = huellaServices.findByUserID(Session.getInstancia().getUsuarioIniciado());
         huellaTableView.getItems().setAll(huellas);
         setupTableView();
         setupDeleteButton();
 
+        //A PARTIR DE AQUI ES PARA PERSONALIZAR EL TABLEVIEW DE HABITOS
         Frecuecncia.setCellValueFactory(new PropertyValueFactory<>("frecuencia"));
         Tipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
 
         ActividadHabito.setCellValueFactory(cellData -> {
             Habito habito = cellData.getValue();
-            Actividad actividad = habitoDAO.findActividadById(habito);
+            Actividad actividad = habitoService.getActividadById(habito);
             return new SimpleStringProperty(actividad != null ? actividad.getNombre() : "Actividad no disponible");
         });
-        List<Habito> habitos = habitoDAO.findByUser(Session.getInstancia().getUsuarioIniciado());
+        List<Habito> habitos = habitoService.findByUser(Session.getInstancia().getUsuarioIniciado());
         habitoTableView.getItems().setAll(habitos);
+        setupDeleteButtonHabito();
     }
 
     private void setupTableView() {
@@ -98,7 +104,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
             try {
                 BigDecimal nuevoValor = new BigDecimal(event.getNewValue().toString());
                 huella.setValor(nuevoValor);
-                huellaDAO.updateHuella(huella);
+                huellaServices.actualizarHuella(huella);
                 System.out.println("Valor actualizado a: " + nuevoValor);
             } catch (NumberFormatException e) {
                 System.out.println("Error al convertir el valor a BigDecimal: " + event.getNewValue());
@@ -106,15 +112,39 @@ public class PantallaPrincipalController extends Controller implements Initializ
         });
     }
 
-
     private void setupDeleteButton() {
         Eliminar.setCellFactory(param -> new javafx.scene.control.TableCell<>() {
             private final Button deleteButton = new Button("Eliminar");
+
             {
                 deleteButton.setOnAction(event -> {
                     Huella huella = getTableView().getItems().get(getIndex());
-                    huellaDAO.delete(huella);
+                    huellaServices.delete(huella);
                     getTableView().getItems().remove(huella);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(deleteButton);
+                }
+            }
+        });
+    }
+
+    private void setupDeleteButtonHabito() {
+        EliminarHabito.setCellFactory(param -> new javafx.scene.control.TableCell<>() {
+            private final Button deleteButton = new Button("Eliminar");
+
+            {
+                deleteButton.setOnAction(event -> {
+                    Habito habito = getTableView().getItems().get(getIndex());
+                    habitoService.delete(habito);
+                    getTableView().getItems().remove(habito);
                 });
             }
 
@@ -137,6 +167,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
     public void openModalAñadirHuella() throws Exception {
         App.currentController.openModal(Scenes.HUELLA, "Añadir Huella", this, null);
     }
+
     public void openModalRecomendaciones() throws Exception {
         App.currentController.openModal(Scenes.RECOMENDACION, "Recomendaciones", this, null);
     }

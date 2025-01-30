@@ -92,7 +92,6 @@ public class AñadirHabitoController extends Controller implements Initializable
         Habito habito = recogerDatosHabito();
         habitoService.insertarHabito(habito);
         changescenetoPantallaPrincipal();
-        closeModalAñadirHuella();
     }
 
     public void changescenetoPantallaPrincipal() throws IOException {

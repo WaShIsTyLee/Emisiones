@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.View.PantallaPrincipalController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.View.PantallaPrincipalController">
    <children>
       <VBox layoutX="8.0" layoutY="8.0" prefHeight="780.0" prefWidth="367.0">
          <children>
@@ -58,7 +58,8 @@
               <columns>
                 <TableColumn fx:id="Frecuecncia" prefWidth="75.0" text="Frecuencia" />
                 <TableColumn fx:id="Tipo" prefWidth="75.0" text="Tipo" />
-                  <TableColumn fx:id="ActividadHabito" prefWidth="75.0" text="Actividad" />
+                  <TableColumn fx:id="ActividadHabito" prefWidth="266.4000244140625" text="Actividad" />
+                  <TableColumn fx:id="EliminarHabito" minWidth="0.0" prefWidth="70.39996337890625" text="Eliminar" />
               </columns>
             </TableView>
          </children>

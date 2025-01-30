@@ -2,8 +2,10 @@ package org.example.Services;
 
 import org.example.DAO.HuellaDAO;
 import org.example.Entities.Huella;
+import org.example.Entities.Usuario;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class HuellaServices {
 
@@ -43,6 +45,21 @@ public class HuellaServices {
         boolean aux = false;
         try {
             huellaDAO.updateHuella(huella);
+            aux = true;
+        } catch (Exception e) {
+            System.err.println("Error actualizando la huella: " + e.getMessage());
+        }
+        return aux;
+    }
+
+    public List<Huella> findByUserID(Usuario usuario) {
+        return huellaDAO.findByUserID(usuario);
+    }
+
+    public boolean delete(Huella huella) {
+        boolean aux = false;
+        try {
+            huellaDAO.delete(huella);
             aux = true;
         } catch (Exception e) {
             System.err.println("Error actualizando la huella: " + e.getMessage());

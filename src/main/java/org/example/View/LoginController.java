@@ -22,8 +22,10 @@ public class LoginController extends Controller implements Initializable {
     PasswordField txtPassword;
     @FXML
     TextField txtUser;
-
     UserService userService = new UserService();
+
+    //todo ESTE CONTROLLADOR TMBIEN TIENE LOS SERVICES APLICADOS COMPROBAR ERRORES
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

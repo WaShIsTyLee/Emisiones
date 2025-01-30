@@ -52,14 +52,4 @@ public class HabitoDAO {
         session.close();
         return habitos;
     }
-
-    public boolean delete(Habito habito){
-        Connection connection = Connection.getInstance();
-        Session session = connection.getSession();
-        session.beginTransaction();
-        session.delete(habito);
-        session.getTransaction().commit();
-        session.close();
-        return true;
-    }
 }

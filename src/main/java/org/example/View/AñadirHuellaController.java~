@@ -113,13 +113,13 @@ public class AñadirHuellaController extends Controller implements Initializable
                     actividadService.getActividadByName(comboBoxActividades.getSelectionModel().getSelectedItem())
             );
         }
-        if (datePicker.getValue() == null || datePicker.getValue().isBefore(LocalDate.now())) {
-            System.out.println("Error: La fecha de la huella no es válida.");
-
-        }else {
+        if (datePicker.getValue() == null || datePicker.getValue().isAfter(LocalDate.now())) {
+            System.out.println("Error: La fecha de la huella no es válida.");
+        } else {
             huella.setFecha(datePicker.getValue());
             huella.setIdUsuario(Session.getInstancia().getUsuarioIniciado());
         }
+
 
         return huella;
     }
