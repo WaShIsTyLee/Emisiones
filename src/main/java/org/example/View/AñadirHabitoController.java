@@ -51,6 +51,8 @@ public class AñadirHabitoController extends Controller implements Initializable
                 };
             }
         });
+
+
         comboBoxActividades.setButtonCell(new ListCell<Actividad>() {
             @Override
             protected void updateItem(Actividad item, boolean empty) {
@@ -62,7 +64,6 @@ public class AñadirHabitoController extends Controller implements Initializable
                 }
             }
         });
-
         comboBoxTipo.getItems().addAll("Semanal", "Diario", "Mensual", "Anual");
     }
 
@@ -96,9 +97,9 @@ public class AñadirHabitoController extends Controller implements Initializable
     }
 
     public void changescenetoPantallaPrincipal() throws IOException {
-
         App.currentController.changeScene(Scenes.PANTALLAPRINCIPAL, null);
     }
+
     public void closeModalAñadirHuella() throws IOException {
         Stage stage = (Stage) buttonAñadirHabito.getScene().getWindow();
         stage.close();

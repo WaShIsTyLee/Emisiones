@@ -1,21 +1,50 @@
-/* styles.css */
+/* Fondo con gradiente */
 .root {
-    -fx-font-family: "Arial";
-    -fx-font-size: 14px;
+    -fx-background-color: linear-gradient(to bottom right, #4a90e2, #9013fe);
 }
 
+/* Estilo para los botones */
 .button {
-    -fx-background-color: #264653;
+    -fx-background-color: linear-gradient(to bottom, #6a11cb, #2575fc);
     -fx-text-fill: white;
-    -fx-border-radius: 5px;
-    -fx-padding: 8px;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
 }
+
+#centerPane {
+    -fx-background-color: white;
+    -fx-border-color: white;
+    -fx-padding: 0;
+}
+
 
 .button:hover {
-    -fx-background-color: #2a9d8f;
+    -fx-background-color: linear-gradient(to bottom, #2575fc, #6a11cb);
 }
 
-.label {
-    -fx-text-fill: #264653;
+/* Estilo para los TextField y PasswordField */
+.text-field, .password-field {
+    -fx-font-size: 16px;
+    -fx-background-radius: 5;
+    -fx-background-color: white;
+    -fx-border-color: #6a11cb;
+    -fx-border-radius: 5;
+    -fx-border-width: 2px;
+    -fx-padding: 5 10;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #2575fc;
+    -fx-border-width: 3px;
+}
+
+/* Estilo para el texto */
+.text {
+    -fx-fill: white;
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
