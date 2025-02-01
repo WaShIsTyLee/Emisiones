@@ -9,13 +9,9 @@ import java.time.Instant;
 
 public class Test {
     public static void main(String[] args) {
-        ActividadDAO actividadDAO = new ActividadDAO();
-        Actividad actividad = new Actividad();
-        actividad.setNombre("Consumo de agua potable");
-        actividad = actividadDAO.findActividadByName(actividad);
-        System.out.println(actividad);
-
-
-        System.out.println(actividadDAO.findUnidadByActividad(actividad));
+        Usuario user = new Usuario("J", "J", "J", Instant.now());
+        user.setId(4);
+        UserDAO userDAO = new UserDAO();
+        System.out.println(userDAO.getFactorEmision(user));
     }
 }

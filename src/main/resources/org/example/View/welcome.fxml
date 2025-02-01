@@ -4,53 +4,59 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.View.WelcomeController">
-   <children>
-      <!-- Header -->
-      <HBox alignment="CENTER_LEFT" layoutY="0.0" prefHeight="100.0" prefWidth="1200.0" style="-fx-padding: 10;">
-         <children>
-            <!-- Logo -->
-            <ImageView fitHeight="103.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@LogoApp.png" />
-               </image>
-            </ImageView>
-            <VBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <!-- Espaciador para centrar el texto -->
-                  <Region nodeOrientation="LEFT_TO_RIGHT" prefHeight="38.0" prefWidth="200.0" />
-                  <!-- Título sin estilo -->
-                  <Text text="Impacto Cero" textAlignment="CENTER">
-                     <font>
-                        <Font name="Cooper Black" size="23.0" />
-                     </font></Text>
-               </children>
-            </VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.View.WelcomeController">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" height="819.0" layoutX="710.0" layoutY="-19.0" stroke="BLACK" strokeType="INSIDE" width="580.0">
+            <fill>
+                <LinearGradient endX="0.1818181709809737" endY="1.0" startX="0.3219697082584555" startY="0.10606064940943863">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color red="0.37380117177963257" green="0.436284601688385" blue="0.49473685026168823" />
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color red="1.0" green="1.0" blue="1.0" />
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </fill>
+        </Rectangle>
+        <ImageView fitHeight="810.0" fitWidth="783.0" layoutX="-11.0" layoutY="-5.0">
+            <image>
+                <Image url="@Tierra.jpg" />
+            </image>
+        </ImageView>
 
-            <!-- Espaciador para alinear el texto a la izquierda -->
-            <Region prefHeight="100.0" prefWidth="622.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="iniciarSesion" mnemonicParsing="false" onAction="#changeSceneIniciarSesion" prefHeight="40.0" prefWidth="100.0" text="Iniciar Sesion" />
-            <Region nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="10.0" />
-            <Button fx:id="registrarse" mnemonicParsing="false" onAction="#changeSceneRegistrarse" prefHeight="40.0" prefWidth="100.0" text="Registrarse" />
-            <Region nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="30.0" />
-         </children>
-      </HBox>
+        <!-- Botón Iniciar Sesión -->
+        <Button fx:id="iniciarSesion" layoutX="1084.0" layoutY="54.0" mnemonicParsing="false" onAction="#changeSceneIniciarSesion" prefHeight="32.0" prefWidth="115.0" styleClass="minimalButton" text="Iniciar Sesion" />
 
-      <!-- Contenido Principal (Texto introductorio) -->
-      <VBox alignment="CENTER" layoutY="98.0" prefHeight="702.0" prefWidth="510.0" spacing="20" style="-fx-padding: 20;">
-         <Region prefHeight="170.0" prefWidth="674.0" />
-         <!-- Título principal sin estilo -->
-         <Text text="¡Bienvenido a Impacto Cero!" wrappingWidth="346.8359375" />
-         <!-- Descripción de la app sin estilo -->
-         <Text text="¡Tu pequeño cambio puede generar un gran impacto! En Impacto Cero, te ayudamos a descubrir formas fáciles y efectivas de reducir tu huella de carbono según tus hábitos diarios. Con nuestras recomendaciones personalizadas, puedes hacer decisiones más sostenibles que no solo beneficiarán al planeta, sino que también mejorarán tu calidad de vida." wrappingWidth="607.7494506835938" />
-         <Text text="Empieza hoy mismo y contribuye a un futuro más verde y limpio. 🌍💚" />
-         <Region prefHeight="355.0" prefWidth="674.0" />
-      </VBox>
-   </children>
+        <!-- Botón Registrarse -->
+        <Button fx:id="registrarse" layoutX="1092.0" layoutY="103.0" mnemonicParsing="false" onAction="#changeSceneRegistrarse" prefHeight="32.0" prefWidth="100.0" styleClass="minimalButton" text="Registrarse" />
+        <Text layoutX="866.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20px; -fx-fill: #000000;" text="Reducir tu impacto de CO2 nunca fue tan sencillo" wrappingWidth="268.2374267578125">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Text>
+        <ImageView fitHeight="115.0" fitWidth="115.0" layoutX="969.0" layoutY="658.0">
+            <image>
+                <Image url="@LogoApp.png" />
+            </image>
+        </ImageView>
+        <Text layoutX="866.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-fill: #333333;" text="En Impacto Cero, estamos comprometidos con un futuro más sostenible. El dióxido de carbono (CO2) es uno de los principales responsables del cambio climático, pero cada acción, por pequeña que sea, puede marcar una diferencia significativa." wrappingWidth="321.4688720703125" />
+        <Text layoutX="866.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-fill: #333333;" text="Nuestra aplicación te ayuda a reducir tu huella de carbono a través de recomendaciones personalizadas basadas en tus hábitos diarios. Ya sea en el transporte, el consumo de energía, los alimentos que eliges, o cómo gestionas los residuos, aquí encontrarás maneras efectivas y fáciles de hacer tu vida más ecológica." wrappingWidth="321.4688720703125" />
+      <Text layoutX="866.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #000000;" text="Impacto Cero" wrappingWidth="191.43743896484375">
+         <font>
+            <Font name="Arial Black" size="40.0" />
+         </font>
+      </Text>
+    </children>
 </AnchorPane>

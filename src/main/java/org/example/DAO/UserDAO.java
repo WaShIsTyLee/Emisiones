@@ -5,12 +5,15 @@ import org.example.Entities.Usuario;
 import org.example.Session.Connection;
 import org.hibernate.Session;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class UserDAO {
 
     private final static String findUserByID = "FROM Usuario WHERE id = :id";
     private final static String findUserByEmail = "FROM Usuario WHERE email = :email";
+    private final static String getFactorEmision = "SELECT h.valor * c.factorEmision FROM Huella h JOIN Actividad a ON h.idActividad.id = a.id JOIN Categoria c ON a.idCategoria.id = c.id WHERE h.idUsuario.id = :idUsuario";
+
 
     public void insertUsuario(Usuario user) {
         Connection connection = Connection.getInstance();
@@ -19,6 +22,16 @@ public class UserDAO {
         session.persist(user);
         session.getTransaction().commit();
         session.close();
+    }
+
+    public List<BigDecimal> getFactorEmision(Usuario user) {
+        Connection connection = Connection.getInstance();
+        Session session = connection.getSession();
+        Query query = session.createQuery(getFactorEmision);
+        query.setParameter("idUsuario", user.getId());
+        List<BigDecimal> factorEmision = query.getResultList();
+        session.close();
+        return factorEmision;
     }
 
     public Usuario updateUsuario(Usuario user) {
