@@ -55,6 +55,21 @@
          </image>
       </ImageView>
       <Button fx:id="btnRegister" layoutX="817.0" layoutY="534.0" mnemonicParsing="false" onAction="#changeSceneToRegister" prefHeight="32.0" prefWidth="247.0" text="Registrarse" />
+      <ImageView fitHeight="90.0" fitWidth="90.0" layoutX="127.0" layoutY="321.0">
+         <image>
+            <Image url="@DiagramaCircular.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="90.0" fitWidth="90.0" layoutX="184.0" layoutY="388.0">
+         <image>
+            <Image url="@Mas.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="90.0" fitWidth="90.0" layoutX="230.0" layoutY="300.0">
+         <image>
+            <Image url="@Diagrama.png" />
+         </image>
+      </ImageView>
 
    </children>
 </AnchorPane>
