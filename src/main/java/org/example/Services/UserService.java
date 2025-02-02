@@ -47,4 +47,9 @@ public class UserService {
     public List<BigDecimal> getFactorEmision(Usuario user) {
         return userDAO.getFactorEmision(user);
     }
+
+    public boolean actualizarUsuario(Usuario user) {
+        userDAO.updateUsuario(user);
+        return true;
+    }
 }

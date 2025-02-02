@@ -8,6 +8,7 @@ public enum Scenes {
     RECOMENDACION("/org/example/View/recomendaciones.fxml"),
     REGISTER("/org/example/View/register.fxml"),
     PANTALLAPRINCIPAL("/org/example/View/PantallaPrincipal2.fxml"),
+    ACTUALIZARUSUARIO("/org/example/View/actualizarusuario.fxml"),
     PRIMARY("/org/example/View/welcome.fxml");
 
     private String url;

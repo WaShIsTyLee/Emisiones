@@ -236,7 +236,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
         App.currentController.changeScene(Scenes.PANTALLAPRINCIPAL, null);
     }
     public void openModalPerfil() throws Exception {
-        App.currentController.openModal(Scenes.ACTUALIZARUSUARIO, "Actualizar Usuario", this, null);
+        //App.currentController.openModal(Scenes.HABITO, "Añadir Habito", this, null);
     }
     public void changescenetoWelcomeLogOut() throws IOException {
         Session.getInstancia().logOut();
