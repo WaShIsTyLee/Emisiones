@@ -54,6 +54,8 @@ public class AppController extends Controller implements Initializable {
     public void openModal(Scenes scenes, String tilte, Controller parent, Object data) throws Exception {
         View view = loadFXML(scenes);
         Stage stage = new Stage();
+        stage.setWidth(600); // Ancho en píxeles
+        stage.setHeight(400); // Alto en píxeles
         stage.setTitle(tilte);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(App.stage);
@@ -61,5 +63,13 @@ public class AppController extends Controller implements Initializable {
         stage.setScene(_scene);
         view.controller.onOpen(data);
         stage.showAndWait();
+    }
+
+    public static void showInformationAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

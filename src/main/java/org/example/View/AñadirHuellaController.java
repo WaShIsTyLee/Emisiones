@@ -3,6 +3,7 @@ package org.example.View;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.App;
@@ -22,6 +23,8 @@ public class AñadirHuellaController extends Controller implements Initializable
     Button buttonAñadirHuella;
     @FXML
     DatePicker datePicker;
+    @FXML
+    ImageView info;
 
     @FXML
     ComboBox <Actividad> comboBoxActividades;
@@ -124,8 +127,6 @@ public class AñadirHuellaController extends Controller implements Initializable
     }
 
 
-
-
     //FALTA MOVERLO ESTO VA EN SERVICES
     public void insertarHuella() throws IOException {
         Huella huella = recogerDatos();
@@ -139,6 +140,10 @@ public class AñadirHuellaController extends Controller implements Initializable
         }
     }
 
+    public void mostrarInformacion() {
+        String reglas = "El valor debe ser un número mayor que 0. \nLa fecha no puede ser mayor al día de hoy. \nLa actividad debe ser seleccionada. \nLa unidad se seleccionara sola en funcion de tu Actividad";
+        AppController.showInformationAlert("Información", reglas);
+    }
 }
 
 

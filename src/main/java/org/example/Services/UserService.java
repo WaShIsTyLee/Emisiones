@@ -4,14 +4,17 @@ import org.example.DAO.UserDAO;
 import org.example.Entities.Usuario;
 import org.example.Session.Session;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 public class UserService {
 
     private UserDAO userDAO = new UserDAO();
 
     public boolean logUser(Usuario user) {
-        if (user.getEmail() == null || user.getContraseña() == null || user.getEmail().isEmpty() || user.getContraseña().isEmpty() ) {
+        if (user.getEmail() == null || user.getContraseña() == null || user.getEmail().isEmpty() || user.getContraseña().isEmpty()) {
             return false;
-        }else{
+        } else {
             Usuario usuarioEncontrado = userDAO.findUserByEmail(user);
             if (usuarioEncontrado != null && user.getContraseña().equals(usuarioEncontrado.getContraseña())) {
                 Session.getInstancia().logIn(usuarioEncontrado);
@@ -19,8 +22,8 @@ public class UserService {
                 return true;
             } else {
                 System.out.println("CONTRASEÑA MALA");
-                return false;   
-        }
+                return false;
+            }
 
         }
     }
@@ -39,5 +42,9 @@ public class UserService {
                 return true;
             }
         }
+    }
+
+    public List<BigDecimal> getFactorEmision(Usuario user) {
+        return userDAO.getFactorEmision(user);
     }
 }

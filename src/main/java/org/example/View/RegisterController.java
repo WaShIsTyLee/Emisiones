@@ -19,6 +19,8 @@ public class RegisterController extends Controller implements Initializable {
     @FXML
     Button btnRegister;
     @FXML
+    Button btnLogin;
+    @FXML
     TextField txtUser;
     @FXML
     TextField textEmail;
@@ -53,5 +55,8 @@ public class RegisterController extends Controller implements Initializable {
 
     public void changeSceneToPantallaPricipal() throws IOException {
         App.currentController.changeScene(Scenes.PANTALLAPRINCIPAL, null);
+    }
+    public void changeSceneToLogin() throws IOException {
+        App.currentController.changeScene(Scenes.LOGIN, null);
     }
 }

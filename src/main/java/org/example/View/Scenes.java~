@@ -7,7 +7,7 @@ public enum Scenes {
     HABITO("/org/example/View/añadirhabito.fxml"),
     RECOMENDACION("/org/example/View/recomendaciones.fxml"),
     REGISTER("/org/example/View/register.fxml"),
-    PANTALLAPRINCIPAL("/org/example/View/PantallaPrincipal2.fxml"),
+    PANTALLAPRINCIPAL("/org/example/View/pantallaprincipal.fxml"),
     PRIMARY("/org/example/View/welcome.fxml");
 
     private String url;
