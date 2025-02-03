@@ -3,8 +3,11 @@ package org.example.View;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -25,6 +28,7 @@ import org.example.Session.Session;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -44,6 +48,10 @@ public class PantallaPrincipalController extends Controller implements Initializ
     Button btnRecomendaciones;
     @FXML
     PieChart pieChart;
+    @FXML
+    LineChart lineChart;
+    @FXML
+    ComboBox<String> comboBoxFiltro;
 
     //TABLEVIEW DE HABITOS
     @FXML
@@ -82,11 +90,14 @@ public class PantallaPrincipalController extends Controller implements Initializ
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         text.setText("¡Bienvenido " + Session.getInstancia().getUsuarioIniciado().getNombre() + "!");
-        // CONFIGURACION DEL TABLEVIEW DE HUELLAS
+        comboBoxFiltro.getItems().addAll("Mes", "Semana", "Todos");
+        comboBoxFiltro.setValue("Todos");
+        comboBoxFiltro.setOnAction(event -> aplicarFiltro(comboBoxFiltro.getValue()));
+
+        // Configuración del TableView de Huellas
         Valor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         Unidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
         Fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-
         Actividad.setCellValueFactory(cellData -> {
             Huella huella = cellData.getValue();
             Actividad actividad = actividadService.getActividadById(huella);
@@ -112,15 +123,12 @@ public class PantallaPrincipalController extends Controller implements Initializ
         habitoTableView.getItems().setAll(habitos);
         setupDeleteButtonHabito();
 
-        // CONFIGURACIÓN DEL PIECHART CON LOS NOMBRES DE LAS ACTIVIDADES
+        // Configuración del PieChart
         pieChart.getData().clear();
         List<Huella> huellasPieChart = huellaServices.findByUserID(Session.getInstancia().getUsuarioIniciado());
-
-
         List<BigDecimal> factorEmision = userService.getFactorEmision(Session.getInstancia().getUsuarioIniciado());
 
         double total = huellasPieChart.stream().mapToDouble(h -> h.getValor().doubleValue()).sum();
-
         for (int i = 0; i < huellasPieChart.size(); i++) {
             Huella huella = huellasPieChart.get(i);
             Actividad actividad = actividadService.getActividadById(huella);
@@ -134,7 +142,55 @@ public class PantallaPrincipalController extends Controller implements Initializ
             ));
         }
 
+        // Inicializar LineChart con todos los datos
+        aplicarFiltro("Todos");
     }
+
+    private void aplicarFiltro(String filtro) {
+        lineChart.getData().clear();
+        List<Huella> huellas = huellaServices.findByUserID(Session.getInstancia().getUsuarioIniciado());
+        List<BigDecimal> factoresEmision = userService.getFactorEmision(Session.getInstancia().getUsuarioIniciado());
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Factores de Emisión");
+        if ("Todos".equals(filtro)) {
+            huellas.sort(Comparator.comparing(Huella::getFecha));
+            for (int i = 0; i < huellas.size(); i++) {
+                Huella huella = huellas.get(i);
+                String fecha = huella.getFecha().toString();
+                BigDecimal factorEmisionL = (i < factoresEmision.size()) ? factoresEmision.get(i) : BigDecimal.ZERO;
+                series.getData().add(new XYChart.Data<>(fecha, factorEmisionL.doubleValue()));
+            }
+        } else if ("Mes".equals(filtro)) {
+
+            huellas.sort(Comparator.comparing(Huella::getFecha));
+            for (int i = 0; i < huellas.size(); i++) {
+                Huella huella = huellas.get(i);
+                String fecha = huella.getFecha().toString();
+
+                if (fecha.startsWith("2025-02")) {
+                    BigDecimal factorEmisionL = (i < factoresEmision.size()) ? factoresEmision.get(i) : BigDecimal.ZERO;
+                    series.getData().add(new XYChart.Data<>(fecha, factorEmisionL.doubleValue()));
+                }
+            }
+        } else if ("Semana".equals(filtro)) {
+
+            huellas.sort(Comparator.comparing(Huella::getFecha));
+            for (int i = 0; i < huellas.size(); i++) {
+                Huella huella = huellas.get(i);
+                String fecha = huella.getFecha().toString();
+
+                if (fecha.startsWith("2025-02-03")) {
+                    BigDecimal factorEmisionL = (i < factoresEmision.size()) ? factoresEmision.get(i) : BigDecimal.ZERO;
+                    series.getData().add(new XYChart.Data<>(fecha, factorEmisionL.doubleValue()));
+                }
+            }
+        }
+
+        lineChart.getData().add(series);
+    }
+
+
+
 
 
     private void setupTableView() {

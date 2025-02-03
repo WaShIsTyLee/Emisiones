@@ -6,6 +6,7 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -35,7 +36,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Text layoutX="312.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16px; -fx-fill: #333333;" text="Diagrama de tus Factores de Emision" wrappingWidth="336.4021911621094">
+      <Text layoutX="311.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16px; -fx-fill: #333333;" wrappingWidth="378.2688903808594">
          <font>
             <Font name="Arial Black" size="15.0" />
          </font>
@@ -73,7 +74,7 @@
             <Font name="Arial Black" size="15.0" />
          </font>
       </Text>
-      <PieChart fx:id="pieChart" animated="false" layoutX="282.0" layoutY="26.0" mouseTransparent="true" prefHeight="286.0" prefWidth="434.0" style="-fx-border-color: black;" />
+      <PieChart fx:id="pieChart" animated="false" layoutX="282.0" layoutY="14.0" mouseTransparent="true" prefHeight="290.0" prefWidth="440.0" style="-fx-border-color: black;" title="Diagrama Factores de Emision Porcentajes" />
       <ImageView fitHeight="126.0" fitWidth="126.0" layoutX="71.0" layoutY="308.0">
          <image>
             <Image url="@Imagenes/LogoApp.png" />
@@ -84,7 +85,7 @@
             <Font name="Rockwell" size="42.0" />
          </font>
       </Text>
-      <LineChart layoutX="786.0" layoutY="29.0" prefHeight="283.0" prefWidth="434.0">
+      <LineChart fx:id="lineChart" layoutX="825.0" layoutY="14.0" prefHeight="289.0" prefWidth="441.0" style="-fx-border-color: black;" title="Diagrama Factores de Emision Fechas">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -92,14 +93,6 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <ImageView fx:id="imageLogOut" fitHeight="56.0" fitWidth="56.0" layoutX="20.0" layoutY="16.0" onMouseClicked="#changescenetoWelcomeLogOut">
-         <image>
-            <Image url="@Imagenes/LogOut.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
       <Text fx:id="text" layoutX="60.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16px; -fx-fill: #333333;" text="e" wrappingWidth="170.39999999999998">
          <font>
             <Font name="Arial Black" size="15.0" />
@@ -114,5 +107,19 @@
             <Font name="Arial" size="16.0" />
          </font>
       </Text>
+      <Text layoutX="884.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16px; -fx-fill: #333333;" wrappingWidth="339.0689392089844">
+         <font>
+            <Font name="Arial Black" size="15.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="comboBoxFiltro" layoutX="979.0" layoutY="308.0" prefWidth="150.0" />
+      <ImageView fx:id="imageLogOut" fitHeight="49.0" fitWidth="49.0" layoutX="30.0" layoutY="19.0" onMouseClicked="#changescenetoWelcomeLogOut">
+         <image>
+            <Image url="@Imagenes/Logoutpatras.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>
