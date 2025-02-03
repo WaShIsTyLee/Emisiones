@@ -29,8 +29,6 @@ public class RegisterController extends Controller implements Initializable {
     UserService userService = new UserService();
 
     //todo ESTE CONTROLLADOR TMBIEN TIENE LOS SERVICES APLICADOS COMPROBAR ERRORES
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }

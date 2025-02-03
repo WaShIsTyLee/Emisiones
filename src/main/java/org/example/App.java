@@ -27,7 +27,7 @@ public class App extends Application {
         currentController = (AppController) view.controller;
         currentController.onOpen(null);
         stage.setScene(scene);
-       //stage.setMaximized(true);
+        //stage.setMaximized(true);
         stage.show();
     }
 

@@ -1,23 +1,21 @@
 package org.example.View;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import org.example.DAO.HabitoDAO;
-import org.example.DAO.RecomendacionDAO;
 import org.example.Entities.Habito;
 import org.example.Entities.Recomendacion;
 import org.example.Services.HabitoService;
 import org.example.Services.RecomendacionService;
 import org.example.Session.Session;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+//todo HA FALTA DE TOCAR LA VISTA ESTA CLASE YA TIENE CONTROL DE SERVICES
 
 public class RecomendacionController extends Controller implements Initializable {
 
@@ -37,7 +35,7 @@ public class RecomendacionController extends Controller implements Initializable
         List<Habito> habitosUsuario = habitoService.findByUser(Session.getInstancia().getUsuarioIniciado());
         recomendacionService.findRecomendacionesForUser(habitosUsuario, listaRecomendaciones);
 
-        // Agregar cada recomendación como un VBox al TilePane
+
         for (Recomendacion recomendacion : listaRecomendaciones) {
             VBox itemRecomendacion = new VBox();
             itemRecomendacion.setStyle("-fx-background-color: #f5f5f5; -fx-padding: 10; -fx-border-radius: 5;");

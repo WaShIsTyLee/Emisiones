@@ -64,6 +64,8 @@ public class PantallaPrincipalController extends Controller implements Initializ
     TableColumn<Habito, String> ActividadHabito;
     @FXML
     TableColumn<Habito, Void> EliminarHabito;
+    @FXML
+    TableColumn<Habito, String> FechaHabito;
 
     //TABLEVIEW DE HUELLAS
     @FXML
@@ -112,6 +114,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
         // CONFIGURACION DEL TABLEVIEW DE HÁBITOS
         Frecuecncia.setCellValueFactory(new PropertyValueFactory<>("frecuencia"));
         Tipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        FechaHabito.setCellValueFactory(new PropertyValueFactory<>("ultimaFecha"));
 
         ActividadHabito.setCellValueFactory(cellData -> {
             Habito habito = cellData.getValue();

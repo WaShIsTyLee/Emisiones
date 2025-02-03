@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.View.PantallaPrincipalController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.View.PantallaPrincipalController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d5dced" height="801.0" layoutX="-3.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="256.0" />
       <Text layoutX="72.0" layoutY="474.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titulo-texto" text="Menú" wrappingWidth="115.39995117187505">
@@ -58,12 +58,13 @@
             <Font name="Arial Black" size="15.0" />
          </font>
       </Text>
-      <TableView fx:id="habitoTableView" layoutX="280.0" layoutY="594.0" prefHeight="191.0" prefWidth="407.0">
+      <TableView fx:id="habitoTableView" layoutX="280.0" layoutY="594.0" prefHeight="191.0" prefWidth="550.0">
          <columns>
-            <TableColumn fx:id="Frecuecncia" prefWidth="75.0" text="Frecuencia" />
-            <TableColumn fx:id="Tipo" prefWidth="75.0" text="Tipo" />
-            <TableColumn fx:id="ActividadHabito" prefWidth="154.4000244140625" text="Actividad" />
-            <TableColumn fx:id="EliminarHabito" minWidth="0.0" prefWidth="94.4000244140625" text="Eliminar" />
+            <TableColumn fx:id="ActividadHabito" prefWidth="160.800048828125" text="Actividad" />
+            <TableColumn fx:id="Frecuecncia" prefWidth="105.5999755859375" text="Frecuencia" />
+            <TableColumn fx:id="Tipo" prefWidth="85.5999755859375" text="Tipo" />
+            <TableColumn fx:id="FechaHabito" minWidth="0.0" prefWidth="111.20001220703125" text="Fecha" />
+            <TableColumn fx:id="EliminarHabito" prefWidth="94.4000244140625" text="Eliminar" />
          </columns>
          <cursor>
             <Cursor fx:constant="HAND" />
