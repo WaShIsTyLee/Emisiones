@@ -1,0 +1,58 @@
+package org.example.Utils;
+
+import org.w3c.dom.Document;
+
+import java.util.List;
+
+public class PDF {
+    public static void generarPDF(String filePath, java.util.List<String> recomendaciones, java.util.List<String> impactosCO2) {
+        try {
+            // Crear PdfWriter para el archivo de salida
+            P writer = new PdfWriter(filePath);
+
+            // Crear PdfDocument que utiliza el writer
+            PdfDocument pdf = new PdfDocument(writer);
+
+            // Crear el objeto Document para agregar contenido al PDF
+            Document document = new Document(pdf);
+
+            // Añadir un título
+            document.add(new Paragraph("Reporte de Recomendaciones e Impactos de CO2")
+                    .setBold().setFontSize(16));
+
+            // Añadir una línea en blanco
+            document.add(new Paragraph("\n"));
+
+            // Añadir un subtítulo para las recomendaciones
+            document.add(new Paragraph("Recomendaciones:").setBold());
+
+            // Crear una lista para las recomendaciones
+            List listaRecomendaciones = new List();
+            for (String recomendacion : recomendaciones) {
+                listaRecomendaciones.add(recomendacion);
+            }
+            document.add(listaRecomendaciones);
+
+            // Añadir una línea en blanco
+            document.add(new Paragraph("\n"));
+
+            // Añadir un subtítulo para los impactos de CO2
+            document.add(new Paragraph("Impactos Estimados de CO2:").setBold());
+
+            // Crear una lista para los impactos de CO2
+            List listaImpactos = new List();
+            for (String impacto : impactosCO2) {
+                listaImpactos.add(impacto);
+            }
+            document.add(listaImpactos);
+
+            // Cerrar el documento, esto genera el archivo PDF
+            document.close();
+
+            System.out.println("PDF generado exitosamente en: " + filePath);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

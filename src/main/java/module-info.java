@@ -6,14 +6,17 @@ module org.example {
     requires org.hibernate.orm.core;
     requires java.desktop;
 
-    // Allow reflection for JavaFX and Hibernate
-    opens org.example to javafx.fxml;
-    opens org.example.Entities to javafx.base, org.hibernate.orm.core; // Add javafx.base for JavaFX reflection
 
-    // Regular exports
+
+
+
+    opens org.example to javafx.fxml;
+    opens org.example.Entities to javafx.base, org.hibernate.orm.core;
+    opens org.example.Utils;
+
     exports org.example;
     exports org.example.View;
 
-    // Allow reflection for FXML controllers
+
     opens org.example.View to javafx.fxml;
 }

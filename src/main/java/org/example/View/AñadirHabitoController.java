@@ -22,6 +22,8 @@ public class AñadirHabitoController extends Controller implements Initializable
     @FXML
     ComboBox<Actividad> comboBoxActividades;
     @FXML
+    DatePicker datePicker;
+    @FXML
     TextField frecuencia;
     @FXML
     Button buttonAñadirHabito;
@@ -70,24 +72,61 @@ public class AñadirHabitoController extends Controller implements Initializable
     @Override
     public void onOpen(Object input) throws IOException {
     }
-
     public Habito recogerDatosHabito() {
-        String tipo = (String) comboBoxTipo.getValue();
-        int frecuencia = Integer.parseInt(this.frecuencia.getText());
         Habito habito = new Habito();
-        Actividad actividad = new Actividad();
-        actividad = actividadService.getActividadByName(comboBoxActividades.getSelectionModel().getSelectedItem());
-        habito.setIdActividad(actividad);
-        habito.setFrecuencia(frecuencia);
+
+        // Obtener y validar el tipo
+        String tipo = (String) comboBoxTipo.getValue();
+        if (tipo == null || tipo.isEmpty()) {
+            AppController.showErrorAlertNoSeleccionado();
+            return null;
+        }
         habito.setTipo(tipo);
+
+        // Obtener y validar la frecuencia
+        try {
+            if (frecuencia.getText() != null && !frecuencia.getText().isEmpty()) {
+                habito.setFrecuencia(Integer.parseInt(frecuencia.getText()));
+            } else {
+                habito.setFrecuencia(0); // O algún valor por defecto si es necesario
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Error al procesar la frecuencia: " + e.getMessage());
+            AppController.showErrorAlertNoSeleccionado();
+            return null;
+        }
+
+        // Obtener y validar la actividad seleccionada
+        Actividad actividadSeleccionada = comboBoxActividades.getSelectionModel().getSelectedItem();
+        if (actividadSeleccionada == null) {
+            AppController.showErrorAlertNoSeleccionado();
+            return null;
+        } else {
+            Actividad actividad = actividadService.getActividadByName(actividadSeleccionada);
+            habito.setIdActividad(actividad);
+        }
+
+        // Obtener y validar la fecha seleccionada
+        LocalDate fechaSeleccionada = datePicker.getValue();
+        if (fechaSeleccionada == null || fechaSeleccionada.isAfter(LocalDate.now())) {
+            AppController.showErrorAlertNoSeleccionado();
+            return null;
+        } else {
+            habito.setUltimaFecha(fechaSeleccionada);
+        }
+
+        // Asociar usuario actual
         habito.setIdUsuario(Session.getInstancia().getUsuarioIniciado());
-        habito.setUltimaFecha(LocalDate.now());
+
+        // Crear el ID compuesto del hábito
         HabitoId id = new HabitoId();
-        id.setIdActividad(actividad.getId());
+        id.setIdActividad(habito.getIdActividad().getId());
         id.setIdUsuario(Session.getInstancia().getUsuarioIniciado().getId());
         habito.setId(id);
+
         return habito;
     }
+
 
     public void insertarHabito() throws IOException {
         try {

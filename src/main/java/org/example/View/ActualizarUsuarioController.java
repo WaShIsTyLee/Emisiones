@@ -10,6 +10,7 @@ import org.example.App;
 import org.example.Entities.Usuario;
 import org.example.Services.UserService;
 import org.example.Session.Session;
+import org.example.Utils.Utils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,7 +40,7 @@ public class ActualizarUsuarioController extends Controller implements Initializ
     public void initialize(URL url, ResourceBundle resourceBundle) {
         txtUser.setText(Session.getInstancia().getUsuarioIniciado().getNombre());
         email.setText(Session.getInstancia().getUsuarioIniciado().getEmail());
-        contrasena.setText(Session.getInstancia().getUsuarioIniciado().getContraseña());
+        contrasena.setText("⭕⭕⭕⭕");
         text.setText("¡Vamos a actualizar tus datos " + Session.getInstancia().getUsuarioIniciado().getNombre() + "!");
     }
 
@@ -47,7 +48,8 @@ public class ActualizarUsuarioController extends Controller implements Initializ
         String nombre = txtUser.getText();
         String emailText = email.getText();
         String contrasenaText = contrasena.getText();
-        Usuario user = new Usuario(nombre, emailText, contrasenaText, Session.getInstancia().getUsuarioIniciado().getFechaRegistro());
+
+        Usuario user = new Usuario(nombre, emailText, Utils.hashPassword(contrasenaText), Session.getInstancia().getUsuarioIniciado().getFechaRegistro());
         user.setId(Session.getInstancia().getUsuarioIniciado().getId());
         return user;
     }
