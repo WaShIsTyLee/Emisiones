@@ -3,6 +3,7 @@ package org.example.View;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.App;
@@ -11,6 +12,7 @@ import org.example.Entities.Huella;
 import org.example.Services.ActividadService;
 import org.example.Services.HuellaServices;
 import org.example.Session.Session;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -22,9 +24,11 @@ public class AñadirHuellaController extends Controller implements Initializable
     Button buttonAñadirHuella;
     @FXML
     DatePicker datePicker;
+    @FXML
+    ImageView info;
 
     @FXML
-    ComboBox <Actividad> comboBoxActividades;
+    ComboBox<Actividad> comboBoxActividades;
 
     @FXML
     TextField valor;
@@ -76,7 +80,6 @@ public class AñadirHuellaController extends Controller implements Initializable
     }
 
 
-
     @Override
     public void onOpen(Object input) throws IOException {
     }
@@ -104,7 +107,7 @@ public class AñadirHuellaController extends Controller implements Initializable
             huella.setValor(null);
         }
         if (comboBoxActividades.getSelectionModel().getSelectedItem() == null) {
-            System.out.println("Error: No se ha seleccionado ninguna actividad.");
+
             huella.setIdActividad(null);
         } else {
             huella.setIdActividad(
@@ -112,12 +115,11 @@ public class AñadirHuellaController extends Controller implements Initializable
             );
         }
         if (datePicker.getValue() == null || datePicker.getValue().isAfter(LocalDate.now())) {
-            System.out.println("Error: La fecha de la huella no es válida.");
+            AppController.showErrorAlertHuellaNoCompletada();
         } else {
             huella.setFecha(datePicker.getValue());
             huella.setIdUsuario(Session.getInstancia().getUsuarioIniciado());
         }
-
 
 
         return huella;
@@ -128,12 +130,17 @@ public class AñadirHuellaController extends Controller implements Initializable
     public void insertarHuella() throws IOException {
         Huella huella = recogerDatos();
         boolean resultado = huellaServices.añadirHuella(huella);
-        if (resultado) {
-            System.out.println("Huella insertada correctamente.");
-            changescenetoPantallaPrincipal();
-            closeModalAñadirHuella();
-        } else {
-            System.out.println("Error al insertar la huella. Verifique los datos.");
+        if (huella.getFecha() == null ||huella.getFecha().isAfter(LocalDate.now())) {
+            AppController.showErrorAlertHuellaNoCompletada();
+            if (resultado) {
+                System.out.println("Huella insertada correctamente.");
+                changescenetoPantallaPrincipal();
+                closeModalAñadirHuella();
+            } else {
+                AppController.showErrorAlertHuellaNoCompletada();
+        }
+
+
         }
     }
 

@@ -11,12 +11,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.App;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AppController extends Controller implements Initializable {
+    public static Alert alert = new Alert(Alert.AlertType.ERROR);
+
     @FXML
     private BorderPane borderPane;
     private Controller centerController;
@@ -70,6 +71,20 @@ public class AppController extends Controller implements Initializable {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public static void showErrorAlertNoSeleccionado() {
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("No se ha seleccionado ningun registro de la tabla \n" +
+                "Por favor selecciona una huella o un habito");
+        alert.showAndWait();
+    }
+    public static void showErrorAlertHuellaNoCompletada() {
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Los campos para rellenar la huella no se han introducido correctamente");
         alert.showAndWait();
     }
 }

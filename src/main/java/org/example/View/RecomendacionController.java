@@ -1,14 +1,25 @@
 package org.example.View;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.example.Entities.Habito;
 import org.example.Entities.Recomendacion;
 import org.example.Services.HabitoService;
 import org.example.Services.RecomendacionService;
 import org.example.Session.Session;
+
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,25 +38,68 @@ public class RecomendacionController extends Controller implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cargarRecomendaciones();
+        Platform.runLater(() -> {
+            Stage stage = (Stage) tilePaneRecomendaciones.getScene().getWindow();
+            stage.setWidth(900);
+            stage.setHeight(550);
+            cargarRecomendaciones();
+        });
     }
+
 
     private void cargarRecomendaciones() {
         List<Recomendacion> listaRecomendaciones = new ArrayList<>();
         List<Habito> habitosUsuario = habitoService.findByUser(Session.getInstancia().getUsuarioIniciado());
         recomendacionService.findRecomendacionesForUser(habitosUsuario, listaRecomendaciones);
 
+        // Cambia TilePane por FlowPane para un mejor ajuste
+        FlowPane flowPaneRecomendaciones = new FlowPane();
+        flowPaneRecomendaciones.setHgap(30); // Espaciado horizontal
+        flowPaneRecomendaciones.setVgap(30); // Espaciado vertical
+        flowPaneRecomendaciones.setPadding(new Insets(30, 30, 30, 30)); // Márgenes alrededor
+        flowPaneRecomendaciones.setPrefWidth(tilePaneRecomendaciones.getWidth()); // Asegura que use todo el ancho disponible
+
         for (Recomendacion recomendacion : listaRecomendaciones) {
-            VBox itemRecomendacion = new VBox();
-            itemRecomendacion.setStyle("-fx-background-color: #f5f5f5; -fx-padding: 10; -fx-border-radius: 5;");
+            VBox card = new VBox();
+            card.setSpacing(15); // Espacio entre secciones
+            card.setStyle("-fx-background-color: #ffffff; " // Fondo blanco
+                    + "-fx-padding: 20; "
+                    + "-fx-border-radius: 15; "
+                    + "-fx-background-radius: 15; "
+                    + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5);");
+            card.setPrefWidth(250); // Ancho fijo para cada tarjeta
+            card.setMaxWidth(300); // Máximo ancho de tarjeta
+
+            // Contenido de la tarjeta
+            HBox header = new HBox();
+            header.setAlignment(Pos.CENTER_LEFT);
+            header.setSpacing(10);
+
+            Circle iconCircle = new Circle(20, Paint.valueOf("#4CAF50")); // Icono decorativo
+            Text headerText = new Text("Recomendación");
+            headerText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+            header.getChildren().addAll(iconCircle, headerText);
+
+            VBox content = new VBox();
+            content.setSpacing(10);
+
             Text descripcion = new Text(recomendacion.getDescripcion());
             descripcion.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
             Text impacto = new Text("Impacto estimado: " + recomendacion.getImpactoEstimado());
-            impacto.setStyle("-fx-font-size: 12px; -fx-fill: gray;");
-            itemRecomendacion.getChildren().addAll(descripcion, impacto);
-            tilePaneRecomendaciones.getChildren().add(itemRecomendacion);
+            impacto.setStyle("-fx-font-size: 12px; -fx-fill: #666666;");
+            content.getChildren().addAll(descripcion, impacto);
+
+            card.getChildren().addAll(header, content);
+
+            flowPaneRecomendaciones.getChildren().add(card); // Añadir tarjeta al FlowPane
         }
+
+        tilePaneRecomendaciones.getChildren().clear(); // Limpiar el contenedor anterior
+        tilePaneRecomendaciones.getChildren().add(flowPaneRecomendaciones); // Añadir el nuevo contenedor
     }
+
+
+
 
     @Override
     public void onOpen(Object input) throws IOException {

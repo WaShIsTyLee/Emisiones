@@ -12,6 +12,7 @@ import org.example.Entities.Huella;
 import org.example.Services.ActividadService;
 import org.example.Services.HuellaServices;
 import org.example.Session.Session;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -27,7 +28,7 @@ public class AñadirHuellaController extends Controller implements Initializable
     ImageView info;
 
     @FXML
-    ComboBox <Actividad> comboBoxActividades;
+    ComboBox<Actividad> comboBoxActividades;
 
     @FXML
     TextField valor;
@@ -79,7 +80,6 @@ public class AñadirHuellaController extends Controller implements Initializable
     }
 
 
-
     @Override
     public void onOpen(Object input) throws IOException {
     }
@@ -107,7 +107,7 @@ public class AñadirHuellaController extends Controller implements Initializable
             huella.setValor(null);
         }
         if (comboBoxActividades.getSelectionModel().getSelectedItem() == null) {
-            System.out.println("Error: No se ha seleccionado ninguna actividad.");
+
             huella.setIdActividad(null);
         } else {
             huella.setIdActividad(
@@ -115,12 +115,11 @@ public class AñadirHuellaController extends Controller implements Initializable
             );
         }
         if (datePicker.getValue() == null || datePicker.getValue().isAfter(LocalDate.now())) {
-            System.out.println("Error: La fecha de la huella no es válida.");
+            AppController.showErrorAlertHuellaNoCompletada();
         } else {
             huella.setFecha(datePicker.getValue());
             huella.setIdUsuario(Session.getInstancia().getUsuarioIniciado());
         }
-
 
 
         return huella;
@@ -130,15 +129,22 @@ public class AñadirHuellaController extends Controller implements Initializable
     //FALTA MOVERLO ESTO VA EN SERVICES
     public void insertarHuella() throws IOException {
         Huella huella = recogerDatos();
+
+        if (huella.getFecha() == null || huella.getFecha().isAfter(LocalDate.now())) {
+            AppController.showErrorAlertHuellaNoCompletada();
+            return;
+        }
         boolean resultado = huellaServices.añadirHuella(huella);
+
         if (resultado) {
             System.out.println("Huella insertada correctamente.");
             changescenetoPantallaPrincipal();
             closeModalAñadirHuella();
         } else {
-            System.out.println("Error al insertar la huella. Verifique los datos.");
+            AppController.showErrorAlertHuellaNoCompletada();
         }
     }
+
 
     public void mostrarInformacion() {
         String reglas = "El valor debe ser un número mayor que 0. \nLa fecha no puede ser mayor al día de hoy. \nLa actividad debe ser seleccionada. \nLa unidad se seleccionara sola en funcion de tu Actividad";

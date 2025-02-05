@@ -90,10 +90,15 @@ public class AñadirHabitoController extends Controller implements Initializable
     }
 
     public void insertarHabito() throws IOException {
-        Habito habito = recogerDatosHabito();
-        habitoService.insertarHabito(habito);
-        changescenetoPantallaPrincipal();
-        closeModalAñadirHuella();
+        try {
+            Habito habito = recogerDatosHabito();
+            habitoService.insertarHabito(habito);
+            changescenetoPantallaPrincipal();
+            closeModalAñadirHuella();
+        }catch (Exception e) {
+            AppController.showErrorAlertHuellaNoCompletada();
+        }
+
     }
 
     public void changescenetoPantallaPrincipal() throws IOException {

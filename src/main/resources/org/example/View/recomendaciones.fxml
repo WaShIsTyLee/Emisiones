@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
 
-<?import javafx.scene.control.ScrollPane?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.View.RecomendacionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.View.RecomendacionController">
 
     <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="801.0" stroke="BLACK" strokeType="INSIDE" width="1280.0">
+         <fill>
+            <LinearGradient endX="0.18181816736857093" endY="0.3295454120997226" startX="0.18560605970295993" startY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
         <!-- Título -->
-        <Label layoutX="14.0" layoutY="14.0" prefHeight="32.0" prefWidth="500.0"
-               text="Recomendaciones para reducir tus niveles de CO2"
-               style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        <Label layoutX="406.0" layoutY="49.0" prefHeight="32.0" prefWidth="521.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Recomendaciones para reducir tus niveles de CO2 según tus habitos" />
 
         <!-- ScrollPane para permitir desplazamiento en caso de muchas recomendaciones -->
-        <ScrollPane layoutX="20.0" layoutY="60.0" prefHeight="320.0" prefWidth="560.0"
-                    fitToWidth="true" fitToHeight="true">
-
+        <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="31.0" layoutY="100.0" prefHeight="670.0" prefWidth="1214.0">
+   
             <!-- TilePane para mostrar las recomendaciones -->
-            <TilePane fx:id="tilePaneRecomendaciones"
-                      hgap="10" vgap="10"
-                      prefTileWidth="250.0"
-                      prefTileHeight="100.0"
-                      style="-fx-padding: 10;">
+            <TilePane fx:id="tilePaneRecomendaciones" hgap="10" prefHeight="398.0" prefTileHeight="100.0" prefTileWidth="250.0" prefWidth="711.0" style="-fx-padding: 10;" vgap="10">
             </TilePane>
 
         </ScrollPane>

@@ -271,6 +271,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
     private void setupDeleteButtonHabito() {
         EliminarHabito.setCellFactory(param -> new javafx.scene.control.TableCell<>() {
             private final Button deleteButton = new Button("Eliminar");
+
             {
                 deleteButton.setOnAction(event -> {
                     Habito habito = getTableView().getItems().get(getIndex());
