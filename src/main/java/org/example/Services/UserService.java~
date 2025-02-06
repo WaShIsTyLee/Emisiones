@@ -6,6 +6,7 @@ import org.example.Session.Session;
 import org.example.Utils.Utils;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -19,7 +20,7 @@ public class UserService {
         } else {
             Usuario usuarioEncontrado = userDAO.findUserByEmail(user);
             if (usuarioEncontrado != null && Utils.hashPassword(user.getContraseña()).equals(Utils.hashPassword(usuarioEncontrado.getContraseña()))) {
-                Session.getInstancia().logIn(user);
+                Session.getInstancia().logIn(usuarioEncontrado);
                 System.out.println("Inicio de sesión exitoso");
                 return true;
             } else {
@@ -28,6 +29,26 @@ public class UserService {
             }
 
         }
+    }
+
+    public List<BigDecimal> traerFactorEmision(List<Usuario> users) {
+        List<BigDecimal> factoresEmision = new ArrayList<>();
+
+        // Iteramos sobre los usuarios
+        for (Usuario user : users) {
+            // Obtener el factor de emisión para cada usuario usando su ID
+            List<BigDecimal> factoresPorUsuario = userDAO.obtenerFactoresPorUsuario(user.getId());
+
+            // Añadir los factores a la lista general
+            factoresEmision.addAll(factoresPorUsuario);
+        }
+
+        return factoresEmision;
+    }
+
+
+    public List<Usuario> trearUsuarios() {
+        return userDAO.findAll();
     }
 
     public boolean registerUser(Usuario user) {

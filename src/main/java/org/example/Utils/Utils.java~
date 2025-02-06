@@ -37,8 +37,7 @@ public class Utils {
         }
     }
 
-    public static void generarReportePDF(List<Usuario> users, List<String> recomendaciones) throws DocumentException, IOException {
-        UserDAO userDAO = new UserDAO();
+    public static void generarReportePDF(List<Usuario> users, UserDAO userDAO, List<String> recomendaciones) throws DocumentException, IOException {
         // Obtener la ruta del escritorio de 'washi'
         String escritorioRuta = System.getProperty("user.home") + "/Desktop/ReporteImpacto.pdf";
 

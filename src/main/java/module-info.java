@@ -5,6 +5,7 @@ module org.example {
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
     requires java.desktop;
+    requires itextpdf;
 
 
 

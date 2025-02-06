@@ -17,7 +17,7 @@ public class Test {
 
         List <Usuario> users = userDAO.findAll();
         for (Usuario u : users) {
-            System.out.println(userDAO.calcularImpactoPorCategoriaPorIDUsuario(u) + u.getNombre());
+            System.out.println(userDAO.calcularImpactoPorCategoriaPorIDUsuario(u));
         }
     }
 }

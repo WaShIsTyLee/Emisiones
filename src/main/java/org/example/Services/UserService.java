@@ -6,6 +6,7 @@ import org.example.Session.Session;
 import org.example.Utils.Utils;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -28,6 +29,13 @@ public class UserService {
             }
 
         }
+    }
+
+
+
+
+    public List<Usuario> trearUsuarios() {
+        return userDAO.findAll();
     }
 
     public boolean registerUser(Usuario user) {

@@ -1,5 +1,6 @@
 package org.example.View;
 
+import com.itextpdf.text.DocumentException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,21 +18,15 @@ import javafx.scene.text.Text;
 import javafx.util.converter.BigDecimalStringConverter;
 import org.example.App;
 import org.example.DAO.RecomendacionDAO;
-import org.example.Entities.Actividad;
-import org.example.Entities.Habito;
-import org.example.Entities.Huella;
-import org.example.Services.ActividadService;
-import org.example.Services.HabitoService;
-import org.example.Services.HuellaServices;
-import org.example.Services.UserService;
+import org.example.Entities.*;
+import org.example.Services.*;
 import org.example.Session.Session;
+import org.example.Utils.Utils;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PantallaPrincipalController extends Controller implements Initializable {
 
@@ -39,6 +34,8 @@ public class PantallaPrincipalController extends Controller implements Initializ
     Button buttonRecomendacionesHuella;
     @FXML
     Button buttonRecomendacionesHabito;
+    @FXML
+    Button pdf;
     @FXML
     Text text;
     @FXML
@@ -91,6 +88,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
     HabitoService habitoService = new HabitoService();
     ActividadService actividadService = new ActividadService();
     UserService userService = new UserService();
+    RecomendacionService recomendacionService = new RecomendacionService();
 
     //todo ESTE CONTROLLADOR TMBIEN TIENE LOS SERVICES APLICADOS COMPROBAR ERRORES
 
@@ -297,6 +295,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
         });
     }
 
+
     public Huella getHuellaSelccioandaTableViewHuella() {
         Huella huella = huellaTableView.getSelectionModel().getSelectedItem();
         if (huella != null) {
@@ -328,6 +327,36 @@ public class PantallaPrincipalController extends Controller implements Initializ
         System.out.println(recomendacionDAO.findRecomendacionForHabito(habito));
         return habito;
     }
+
+
+    public void generarPDF() throws IOException, DocumentException {
+        // Obtener los usuarios
+        List<Usuario> users = userService.trearUsuarios();
+
+        // Crear un objeto RecomendacionDAO para buscar recomendaciones
+        RecomendacionDAO r = new RecomendacionDAO();
+
+        // Obtener las huellas del usuario iniciado
+        List<Huella> huellas = huellaServices.findByUserID(Session.getInstancia().getUsuarioIniciado());
+
+        // Usamos un Set para evitar duplicados en las recomendaciones
+        Set<String> recomendaciones = new HashSet<>();
+
+        // Recorrer las huellas y obtener las recomendaciones para cada una
+        for (Huella huella : huellas) {
+            // Obtener las recomendaciones como una lista de objetos Recomendacion
+            List<Recomendacion> recomendacionPorHuella = r.findRecomendacionForHuella(huella);
+
+            // Convertir cada recomendacion de tipo Recomendacion a String y agregarla al Set
+            for (Recomendacion recomendacion : recomendacionPorHuella) {
+                recomendaciones.add(recomendacion.getDescripcion()); // Agregar solo si no está repetida
+            }
+        }
+
+        // Llamar a la función de generación de PDF pasándole los usuarios y las recomendaciones
+        Utils.generarReportePDF(users, new ArrayList<>(recomendaciones)); // Convertir Set a List si es necesario
+    }
+}
 
 
     @Override
