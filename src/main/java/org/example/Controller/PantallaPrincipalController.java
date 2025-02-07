@@ -16,6 +16,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.util.converter.BigDecimalStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 import org.example.App;
 import org.example.DAO.RecomendacionDAO;
 import org.example.Entities.*;
@@ -51,8 +52,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
     Button perfil;
     @FXML
     Button btnAnadirHabito;
-    @FXML
-    Button btnRecomendaciones;
+
     @FXML
     PieChart pieChart;
     @FXML
@@ -64,7 +64,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
     @FXML
     TableView<Habito> habitoTableView;
     @FXML
-    TableColumn<Habito, String> Frecuecncia;
+    TableColumn<Habito, Integer> Frecuecncia;
     @FXML
     TableColumn<Habito, String> Tipo;
     @FXML
@@ -132,6 +132,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
 
         List<Habito> habitos = habitoService.findByUser(Session.getInstancia().getUsuarioIniciado());
         habitoTableView.getItems().setAll(habitos);
+        setupTableViewHabito();
         setupDeleteButtonHabito();
 
         // Configuración del PieChart
@@ -222,24 +223,23 @@ public class PantallaPrincipalController extends Controller implements Initializ
 
     //ACTUALIZAR LOS HABITOS
     private void setupTableViewHabito() {
-        Valor.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        Valor.setOnEditCommit(event -> {
-            Huella huella = event.getRowValue();
+        Frecuecncia.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        Frecuecncia.setOnEditCommit(event -> {
+            Habito habito = event.getRowValue();
             try {
-                BigDecimal nuevoValor = new BigDecimal(event.getNewValue().toString());
-                huella.setValor(nuevoValor);
-                huellaServices.actualizarHuella(huella);
-                try {
-                    changescenetoPantallaPrincipal();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("Valor actualizado a: " + nuevoValor);
+                Integer nuevoValor = event.getNewValue();
+                habito.setFrecuencia(nuevoValor);
+                habitoService.actualizarHabito(habito);
+                System.out.println("Frecuencia actualizada a: " + nuevoValor);
+                changescenetoPantallaPrincipal();
             } catch (NumberFormatException e) {
-                System.out.println("Error al convertir el valor a BigDecimal: " + event.getNewValue());
+                System.out.println("Error al convertir el valor a Integer: " + event.getNewValue());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }
+
 
     private void setupDeleteButton() {
         Eliminar.setCellFactory(param -> new javafx.scene.control.TableCell<>() {

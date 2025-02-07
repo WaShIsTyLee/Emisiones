@@ -26,9 +26,19 @@ public class HabitoDAO {
         return actividadEncontrada;
     }
 
+    public void update(Habito habito){
+        Connection connection = Connection.getInstance();
+        Session session = connection.getSession();
+        session.beginTransaction();
+        session.update(habito);
+        session.getTransaction().commit();
+        session.close();
+    }
+
     public void insertarHabito(Habito habito){
         Connection connection = Connection.getInstance();
         Session session = connection.getSession();
+
         session.beginTransaction();
         session.save(habito);
         session.getTransaction().commit();

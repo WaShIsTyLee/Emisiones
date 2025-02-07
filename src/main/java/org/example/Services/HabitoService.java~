@@ -18,12 +18,11 @@ public class HabitoService {
                 habitoDAO.insertarHabito(habito);
                 return true;
             } else {
+                AppController.showErrorAlertNoSeleccionado();
                 return false;
             }
         } catch (Exception e) {
             System.err.println("Error al insertar el hábito: " + e.getMessage());
-            AppController.showErrorAlertNoSeleccionado();
-
             return false;
         }
     }
