@@ -1,4 +1,4 @@
-package org.example.View;
+package org.example.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +12,9 @@ import org.example.Entities.Huella;
 import org.example.Services.ActividadService;
 import org.example.Services.HuellaServices;
 import org.example.Session.Session;
+import org.example.View.AppController;
+import org.example.View.Controller;
+import org.example.View.Scenes;
 
 import java.io.IOException;
 import java.math.BigDecimal;

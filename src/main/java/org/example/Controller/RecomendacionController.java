@@ -1,4 +1,4 @@
-package org.example.View;
+package org.example.Controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -18,8 +18,8 @@ import org.example.Entities.Recomendacion;
 import org.example.Services.HabitoService;
 import org.example.Services.RecomendacionService;
 import org.example.Session.Session;
+import org.example.View.Controller;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;

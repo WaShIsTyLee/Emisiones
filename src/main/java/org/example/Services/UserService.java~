@@ -8,6 +8,7 @@ import org.example.Utils.Utils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class UserService {
 
@@ -31,20 +32,7 @@ public class UserService {
         }
     }
 
-    public List<BigDecimal> traerFactorEmision(List<Usuario> users) {
-        List<BigDecimal> factoresEmision = new ArrayList<>();
 
-        // Iteramos sobre los usuarios
-        for (Usuario user : users) {
-            // Obtener el factor de emisión para cada usuario usando su ID
-            List<BigDecimal> factoresPorUsuario = userDAO.obtenerFactoresPorUsuario(user.getId());
-
-            // Añadir los factores a la lista general
-            factoresEmision.addAll(factoresPorUsuario);
-        }
-
-        return factoresEmision;
-    }
 
 
     public List<Usuario> trearUsuarios() {
@@ -75,5 +63,9 @@ public class UserService {
     public boolean actualizarUsuario(Usuario user) {
         userDAO.updateUsuario(user);
         return true;
+    }
+
+    public  Map<String, BigDecimal> getFactorEmisionMap(Usuario user) {
+        return userDAO.calcularImpactoPorCategoriaPorIDUsuario(user);
     }
 }

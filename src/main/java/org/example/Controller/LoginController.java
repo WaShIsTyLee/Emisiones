@@ -1,4 +1,4 @@
-package org.example.View;
+package org.example.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,27 +8,28 @@ import javafx.scene.control.TextField;
 import org.example.App;
 import org.example.Entities.Usuario;
 import org.example.Services.UserService;
+import org.example.View.Controller;
+import org.example.View.Scenes;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
 import java.util.ResourceBundle;
 
-public class RegisterController extends Controller implements Initializable {
+public class LoginController extends Controller implements Initializable {
 
-    @FXML
-    Button btnRegister;
     @FXML
     Button btnLogin;
     @FXML
+    Button btnRegister;
+    @FXML
+    PasswordField txtPassword;
+    @FXML
     TextField txtUser;
-    @FXML
-    TextField textEmail;
-    @FXML
-    PasswordField contraseña;
     UserService userService = new UserService();
 
     //todo ESTE CONTROLLADOR TMBIEN TIENE LOS SERVICES APLICADOS COMPROBAR ERRORES
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
@@ -38,23 +39,23 @@ public class RegisterController extends Controller implements Initializable {
     }
 
     public Usuario recogerDatos() {
-        String usuario = txtUser.getText();
-        String password = contraseña.getText();
-        String email = textEmail.getText();
-        return new Usuario(usuario, email, password, Instant.now());
+        String email = txtUser.getText();
+        String password = txtPassword.getText();
+        return new Usuario(email, password);
     }
-    public void registrar() throws IOException {
-        if (userService.registerUser(recogerDatos())){
-           changeSceneToPantallaPricipal();
-        }else {
-            System.out.println("ERROR");
+
+    public void iniciarSesion() throws IOException {
+        if (userService.logUser(recogerDatos())) {
+            changeSceneToPantallaPricipal();
+        } else {
+            // ERROR
         }
     }
 
     public void changeSceneToPantallaPricipal() throws IOException {
         App.currentController.changeScene(Scenes.PANTALLAPRINCIPAL, null);
     }
-    public void changeSceneToLogin() throws IOException {
-        App.currentController.changeScene(Scenes.LOGIN, null);
+    public void changeSceneToRegister() throws IOException {
+        App.currentController.changeScene(Scenes.REGISTER, null);
     }
 }

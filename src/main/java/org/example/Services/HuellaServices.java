@@ -12,63 +12,63 @@ public class HuellaServices {
     HuellaDAO huellaDAO = new HuellaDAO();
 
     public boolean añadirHuella(Huella huella) {
-        // Validar unidad
-        if (huella.getUnidad() == null || huella.getUnidad().isEmpty()) {
-            System.out.println("Error: 'unidad' está vacío o es nulo.");
-            return false; // Operación fallida
-        }
-
-        // Validar valor
-        if (huella.getValor() == null || huella.getValor().compareTo(BigDecimal.ZERO) <= 0) {
-            System.out.println("Error: 'valor' es nulo o no es mayor a cero.");
-            return false; // Operación fallida
-        }
-
-        // Validar idActividad
-        if (huella.getIdActividad() == null) {
-            System.out.println("Error: 'idActividad' está vacío o es nulo.");
+        if (huella == null || huella.getUnidad() == null || huella.getUnidad().isEmpty() ||
+                huella.getValor() == null || huella.getValor().compareTo(BigDecimal.ZERO) <= 0 ||
+                huella.getIdActividad() == null) {
+            System.err.println("Error: Datos de huella inválidos.");
             return false;
         }
-
 
         try {
             huellaDAO.insertaHuella(huella);
             return true;
         } catch (Exception e) {
-            System.out.println("Error al insertar la huella en la base de datos: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Error al insertar la huella: " + e.getMessage());
             return false;
         }
     }
 
     public boolean actualizarHuella(Huella huella) {
-        boolean aux = false;
         try {
-            huellaDAO.updateHuella(huella);
-            aux = true;
+            if (huella != null) {
+                huellaDAO.updateHuella(huella);
+                return true;
+            } else {
+                System.err.println("Error: Huella nula.");
+                return false;
+            }
         } catch (Exception e) {
             System.err.println("Error actualizando la huella: " + e.getMessage());
+            return false;
         }
-        return aux;
     }
 
     public List<Huella> findByUserID(Usuario usuario) {
-        return huellaDAO.findByUserID(usuario);
+        try {
+            if (usuario != null) {
+                return huellaDAO.findByUserID(usuario);
+            } else {
+                System.err.println("Error: Usuario nulo.");
+                return List.of();
+            }
+        } catch (Exception e) {
+            System.err.println("Error al buscar huellas por usuario: " + e.getMessage());
+            return List.of();
+        }
     }
 
     public boolean delete(Huella huella) {
-        boolean aux = false;
         try {
-            huellaDAO.delete(huella);
-            aux = true;
+            if (huella != null) {
+                huellaDAO.delete(huella);
+                return true;
+            } else {
+                System.err.println("Error: Huella nula.");
+                return false;
+            }
         } catch (Exception e) {
-            System.err.println("Error actualizando la huella: " + e.getMessage());
+            System.err.println("Error eliminando la huella: " + e.getMessage());
+            return false;
         }
-        return aux;
     }
-
-
 }
-
-
-

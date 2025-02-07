@@ -1,4 +1,4 @@
-package org.example.View;
+package org.example.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,9 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.DAO.RecomendacionDAO;
-import org.example.Entities.Habito;
 import org.example.Entities.Huella;
 import org.example.Entities.Recomendacion;
+import org.example.View.Controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -20,17 +20,13 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class RecomendacionHabitoController extends Controller implements Initializable {
-
+public class RecomendacionHuellaController extends Controller implements Initializable {
     @FXML
     VBox panelInfo;
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 
     @Override
     public void onOpen(Object input) throws IOException {
+
         if (panelInfo.getScene() != null) {
             Stage stage = (Stage) panelInfo.getScene().getWindow();
             stage.setWidth(630);
@@ -49,11 +45,11 @@ public class RecomendacionHabitoController extends Controller implements Initial
         }
 
 
-        Habito habito = (Habito) input;
-        System.out.println(habito);
+        Huella huella = (Huella) input;
+        System.out.println(huella);
 
         RecomendacionDAO recomendacionDAO = new RecomendacionDAO();
-        List<Recomendacion> recomendaciones = recomendacionDAO.findRecomendacionForHabito(habito);
+        List<Recomendacion> recomendaciones = recomendacionDAO.findRecomendacionForHuella(huella);
 
         System.out.println(recomendaciones);
 
@@ -82,7 +78,7 @@ public class RecomendacionHabitoController extends Controller implements Initial
                 card.setAlignment(Pos.CENTER_LEFT);
                 card.setStyle("-fx-background-color: #f9f9f9; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-border-color: #ddd; -fx-padding: 10px;");
                 Label icono = new Label("✔");
-                icono.setStyle("-fx-font-size: 18px; -fx-text-fill: #4CAF50;");
+                icono.setStyle("-fx-font-size: 18px; -fx-text-fill: #4CAF50;"); // Verde
                 Label recomendacionLabel = new Label(recomendacion.getDescripcion());
                 recomendacionLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333;");
                 Label impactoLabel = new Label(getImpactoTexto(recomendacion.getImpactoEstimado()));
@@ -102,4 +98,9 @@ public class RecomendacionHabitoController extends Controller implements Initial
     private String getImpactoStyle(BigDecimal impacto) {
         return "-fx-background-color: #77dd77; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 3px 8px; -fx-border-radius: 5px; -fx-background-radius: 5px;";
     }
+
+
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
+
 }

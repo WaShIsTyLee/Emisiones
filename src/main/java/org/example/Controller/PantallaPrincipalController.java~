@@ -1,4 +1,4 @@
-package org.example.View;
+package org.example.Controller;
 
 import com.itextpdf.text.DocumentException;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,10 +22,14 @@ import org.example.Entities.*;
 import org.example.Services.*;
 import org.example.Session.Session;
 import org.example.Utils.Utils;
+import org.example.View.AppController;
+import org.example.View.Controller;
+import org.example.View.Scenes;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.*;
 
 public class PantallaPrincipalController extends Controller implements Initializable {
@@ -152,48 +156,52 @@ public class PantallaPrincipalController extends Controller implements Initializ
         aplicarFiltro("Todos");
     }
 
+   import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.List;
+import java.math.BigDecimal;
+import javafx.scene.chart.XYChart;
+
     private void aplicarFiltro(String filtro) {
         lineChart.getData().clear();
         List<Huella> huellas = huellaServices.findByUserID(Session.getInstancia().getUsuarioIniciado());
         List<BigDecimal> factoresEmision = userService.getFactorEmision(Session.getInstancia().getUsuarioIniciado());
+
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Factores de Emisión");
-        if ("Todos".equals(filtro)) {
-            huellas.sort(Comparator.comparing(Huella::getFecha));
-            for (int i = 0; i < huellas.size(); i++) {
-                Huella huella = huellas.get(i);
-                String fecha = huella.getFecha().toString();
-                BigDecimal factorEmisionL = (i < factoresEmision.size()) ? factoresEmision.get(i) : BigDecimal.ZERO;
-                series.getData().add(new XYChart.Data<>(fecha, factorEmisionL.doubleValue()));
-            }
-        } else if ("Mes".equals(filtro)) {
 
-            huellas.sort(Comparator.comparing(Huella::getFecha));
-            for (int i = 0; i < huellas.size(); i++) {
-                Huella huella = huellas.get(i);
-                String fecha = huella.getFecha().toString();
+        // Ordenar huellas por fecha
+        huellas.sort(Comparator.comparing(Huella::getFecha));
 
-                if (fecha.startsWith("2025-02")) {
-                    BigDecimal factorEmisionL = (i < factoresEmision.size()) ? factoresEmision.get(i) : BigDecimal.ZERO;
-                    series.getData().add(new XYChart.Data<>(fecha, factorEmisionL.doubleValue()));
+        LocalDate hoy = LocalDate.now();
+        LocalDate haceUnaSemana = hoy.minusDays(6); // Incluye los últimos 7 días
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for (int i = 0; i < huellas.size(); i++) {
+            Huella huella = huellas.get(i);
+            LocalDate fechaHuella = LocalDate.parse(huella.getFecha().toString(), formatter);
+            BigDecimal factorEmisionL = (i < factoresEmision.size()) ? factoresEmision.get(i) : BigDecimal.ZERO;
+
+            if ("Todos".equals(filtro)) {
+                series.getData().add(new XYChart.Data<>(fechaHuella.toString(), factorEmisionL.doubleValue()));
+
+            } else if ("Mes".equals(filtro)) {
+                if (fechaHuella.getMonth() == hoy.getMonth() && fechaHuella.getYear() == hoy.getYear()) {
+                    series.getData().add(new XYChart.Data<>(fechaHuella.toString(), factorEmisionL.doubleValue()));
                 }
-            }
-        } else if ("Semana".equals(filtro)) {
 
-            huellas.sort(Comparator.comparing(Huella::getFecha));
-            for (int i = 0; i < huellas.size(); i++) {
-                Huella huella = huellas.get(i);
-                String fecha = huella.getFecha().toString();
-
-                if (fecha.startsWith("2025-02-03")) {
-                    BigDecimal factorEmisionL = (i < factoresEmision.size()) ? factoresEmision.get(i) : BigDecimal.ZERO;
-                    series.getData().add(new XYChart.Data<>(fecha, factorEmisionL.doubleValue()));
+            } else if ("Semana".equals(filtro)) {
+                if (!fechaHuella.isBefore(haceUnaSemana) && !fechaHuella.isAfter(hoy)) {
+                    series.getData().add(new XYChart.Data<>(fechaHuella.toString(), factorEmisionL.doubleValue()));
                 }
             }
         }
 
         lineChart.getData().add(series);
     }
+
 
 
     private void setupTableView() {
@@ -331,7 +339,7 @@ public class PantallaPrincipalController extends Controller implements Initializ
 
     public void generarPDF() throws IOException, DocumentException {
         // Obtener los usuarios
-        List<Usuario> users = userService.trearUsuarios();
+        List<Usuario> users = userService.traerUsuarios();
 
         // Crear un objeto RecomendacionDAO para buscar recomendaciones
         RecomendacionDAO r = new RecomendacionDAO();

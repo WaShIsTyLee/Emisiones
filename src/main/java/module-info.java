@@ -20,4 +20,6 @@ module org.example {
 
 
     opens org.example.View to javafx.fxml;
+    exports org.example.Controller;
+    opens org.example.Controller to javafx.fxml;
 }
