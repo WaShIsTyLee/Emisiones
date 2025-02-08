@@ -12,8 +12,7 @@ public class ActividadDAO {
 
     private final static String findall = "FROM Actividad";
     private final static String findActividadByName = "FROM Actividad WHERE nombre = :name";
-    private final static String findUnidadByActividad = "SELECT c.unidad FROM Categoria c JOIN Actividad a " +
-            "ON a.idCategoria = c WHERE a.idCategoria.id = :idCategoria";
+    private final static String findUnidadByActividad = "SELECT c.unidad FROM Categoria c JOIN Actividad a ON a.idCategoria = c WHERE a.idCategoria.id = :idCategoria";
     private final static String findByID = "FROM Actividad WHERE id = :id";
     private final static String findActividadByHuella = "FROM Actividad WHERE id = :id";
 

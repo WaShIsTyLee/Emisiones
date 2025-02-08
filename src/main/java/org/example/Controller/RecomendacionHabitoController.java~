@@ -59,7 +59,7 @@ public class RecomendacionHabitoController extends Controller implements Initial
 
         panelInfo.getChildren().clear();
 
-        Label huellaLabel = new Label("🌍 Recomendaciones para tus habitos:");
+        Label huellaLabel = new Label("🌍 Recomendaciones para tu huella:");
         huellaLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;");
         panelInfo.getChildren().add(huellaLabel);
 

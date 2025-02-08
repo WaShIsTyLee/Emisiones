@@ -23,18 +23,6 @@ public class UserDAO {
             "JOIN Categoria c ON a.idCategoria.id = c.id WHERE h.idUsuario.id = :idUsuario";
     private final static String GET_ALL_USERS = "FROM Usuario";
 
-    private final static String obtenerfactoremisiondeusuarios =
-            "SELECT h.valor * c.factorEmision, c.nombre " +
-                    "FROM Huella h " +
-                    "JOIN h.idActividad a " +
-                    "JOIN a.idCategoria c " +
-                    "WHERE h.idUsuario.id = :idUsuario";
-
-
-
-
-
-
 
     public void insertUsuario(Usuario user) {
         Connection connection = Connection.getInstance();
@@ -66,35 +54,22 @@ public class UserDAO {
                 "WHERE h.idUsuario.id = :idUsuario " +
                 "GROUP BY c.nombre";
 
-        // Usamos el tipo adecuado para la consulta sin parámetros genéricos
-        jakarta.persistence.Query query = session.createQuery(hql);
+        Query query = session.createQuery(hql);
         query.setParameter("idUsuario", usuario.getId());
-
-        // Map para almacenar los resultados
         Map<String, BigDecimal> impactos = new HashMap<>();
 
-        // Iteramos sobre los resultados de la consulta
         for (Object result : query.getResultList()) {
-            Object[] row = (Object[]) result; // Hacemos un cast a Object[]
+            Object[] row = (Object[]) result;
 
-            // Asignamos el valor de cada campo
             String categoria = (String) row[0];
             BigDecimal impacto = (BigDecimal) row[1];
 
-            // Añadimos la categoría y su impacto al mapa
             impactos.put(categoria, impacto);
         }
 
         session.close();
         return impactos;
     }
-
-
-
-
-
-
-
 
     public List<BigDecimal> getFactorEmision(Usuario user) {
         Connection connection = Connection.getInstance();

@@ -25,7 +25,8 @@ public class UserService {
             Usuario usuarioEncontrado = userDAO.findUserByEmail(user);
 
             if (usuarioEncontrado != null &&
-                    Utils.hashPassword(user.getContraseña()).equals(Utils.hashPassword(usuarioEncontrado.getContraseña()))) {
+                    Utils.hashPassword(user.getContraseña()).equals
+                            (Utils.hashPassword(usuarioEncontrado.getContraseña()))) {
                 Session.getInstancia().logIn(usuarioEncontrado);
                 System.out.println("Inicio de sesión exitoso");
                 return true;
